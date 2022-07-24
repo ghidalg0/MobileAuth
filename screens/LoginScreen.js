@@ -2,6 +2,7 @@ import AuthContent from '../components/Auth/AuthContent';
 import { useState } from 'react';
 import { login } from '../util/auth';
 import LoadingOverlay from "../components/ui/LoadingOverlay";
+import { Alert } from 'react-native';
 
 function LoginScreen() {
 
@@ -9,7 +10,11 @@ function LoginScreen() {
 
   const loginHandler = async ({ email, password }) => {
     setIsAuthenticating(true);
-    await login(email, password);
+    try {
+      await login(email, password);
+    } catch (error) {
+      Alert.alert("Login failed", "Could not log you in, please check your email / password combinations")
+    }
     setIsAuthenticating(false);
   };
 
